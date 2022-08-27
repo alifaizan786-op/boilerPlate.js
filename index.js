@@ -63,6 +63,10 @@ function loadMainPrompts() {
           name: "A Front-End App",
           value: "front_end_app",
         },
+        {
+          name: "A Front-End App With A Express Server To Serve It",
+          value: "front_end_app_express_server",
+        },
       ],
     },
   ]).then((res) => {
@@ -74,7 +78,10 @@ function loadMainPrompts() {
       case "front_end_app":
         /* Calling the function `frontEndApp()` and passing in the value of the `appName` property of
         the `res` object. */
-        frontEndApp(res.appName);
+        frontEndApp(res.appName, "output");
+        break;
+      case "front_end_app_express_server":
+        expressServer_FrontEndApp(res.appName)
         break;
       default:
         quit();
@@ -87,14 +94,14 @@ function loadMainPrompts() {
  * generate the app
  * @param appName - The name of the app you want to create.
  */
-async function frontEndApp(appName) {
+async function frontEndApp(appName, pathParam) {
   askForFrontEndLib().then((res) => {
     let addFrontEndLib = res.addFrontEndLib;
 
     /* Checking if the user wants to add a front end library. If they do, then it asks them which one. */
     if (addFrontEndLib) {
       frontEndLibOpts().then((res) => {
-        genFrontEndApp(appName, res);
+        genFrontEndApp(appName, res, pathParam);
       });
     } else {
       genFrontEndApp(appName);
@@ -102,4 +109,10 @@ async function frontEndApp(appName) {
   });
 }
 
+async function expressServer_FrontEndApp(appName){
+  await frontEndApp(appName, "output/public");
+
+}
+
 init();
+

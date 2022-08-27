@@ -19,17 +19,18 @@ module.exports = {
    * @param appName - The name of the app.
    * @param frontEndLibArr - An array of front-end libraries that the user wants to use.
    */
-  async genFrontEndApp(appName, frontEndLibArr) {
+  async genFrontEndApp(appName, frontEndLibArr, pathParam) {
+    await createDirectories(pathParam);
+
     /* Creating an array of directories. */
     let dirs = [
-      "./output",
-      "./output/assets",
-      "./output/assets/CSS",
-      "./output/assets/JS",
-      "./output/assets/Images",
-      "./output/assets/Images/small",
-      "./output/assets/Images/medium",
-      "./output/assets/Images/large",
+      path.join(pathParam, `/assets`),
+      path.join(pathParam, `/assets/CSS`),
+      path.join(pathParam, `/assets/JS`),
+      path.join(pathParam, `/assets/Images`),
+      path.join(pathParam, `/assets/Images/small`),
+      path.join(pathParam, `/assets/Images/medium`),
+      path.join(pathParam, `/assets/Images/large`),
     ];
 
     /* Looping through the array of directories and creating them. */
@@ -37,10 +38,17 @@ module.exports = {
       await createDirectories(dirs[i]);
     }
 
+    let htmlPath = path.join(pathParam);
+    let cssPath = path.join(pathParam, `/assets/CSS`);
+    let jsPath = path.join(pathParam, `/assets/JS`);
+
     /* Calling the functions from the generateBoiler.js file. */
-    await boilerHtml("./output", appName, frontEndLibArr ? frontEndLibArr : "");
-    await boilerResetCss("./output/assets/CSS/");
-    await boilerStyleCss("./output/assets/CSS/");
-    await boilerScript("./output/assets/JS/");
+    setTimeout(() => {
+      boilerHtml(htmlPath, appName, frontEndLibArr ? frontEndLibArr : "");
+      boilerResetCss(cssPath);
+      boilerStyleCss(cssPath);
+      boilerScript(jsPath);
+    }, 500);
+    
   },
 };

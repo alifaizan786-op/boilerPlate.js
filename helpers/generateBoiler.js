@@ -21,7 +21,7 @@ function boilerHtml(filePath, appName, frontEndLibArr) {
         allJslinks += `${frontEndLibArr[i].value.js}  \n`;
     }
   }
-  console.log(allCsslinks, allJslinks);
+
   let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
