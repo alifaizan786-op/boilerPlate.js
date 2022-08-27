@@ -4,6 +4,10 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = {
+  /**
+   * It asks the user if they want to add any front end libraries.
+   * @returns a prompt that asks the user if they would like to add any front end libraries.
+   */
   askForFrontEndLib() {
     return prompt([
       {
@@ -23,6 +27,11 @@ module.exports = {
       },
     ]);
   },
+  /**
+   * It takes the user's input from the prompt, and then filters the frontEndLibArr array to find the
+   * objects that match the user's input.
+   * @returns An array of objects.
+   */
   frontEndLibOpts() {
     return prompt([
       {

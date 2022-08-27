@@ -1,14 +1,24 @@
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * It takes in an array of objects, and if the object has a value of css or js, it will add it to the
+ * html file.
+ * @param filePath - The path to the directory where the file will be created.
+ * @param appName - The name of the app
+ * @param frontEndLibArr - [{
+ * @returns Nothing.
+ */
 function boilerHtml(filePath, appName, frontEndLibArr) {
   let allCsslinks = "";
   let allJslinks = "";
 
   if (frontEndLibArr.length > 0) {
     for (let i = 0; i < frontEndLibArr.length; i++) {
-      if(frontEndLibArr[i].value.css)  allCsslinks += `${frontEndLibArr[i].value.css} \n`;
-      if(frontEndLibArr[i].value.js)   allJslinks  += `${frontEndLibArr[i].value.js}  \n`;
+      if (frontEndLibArr[i].value.css)
+        allCsslinks += `${frontEndLibArr[i].value.css} \n`;
+      if (frontEndLibArr[i].value.js)
+        allJslinks += `${frontEndLibArr[i].value.js}  \n`;
     }
   }
   console.log(allCsslinks, allJslinks);
@@ -36,6 +46,11 @@ ${allJslinks}
   return;
 }
 
+/**
+ * It writes a CSS file to the specified directory
+ * @param filePath - The path to the directory where the file will be created.
+ * @returns Nothing.
+ */
 function boilerResetCss(filePath) {
   let css = `/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -395,6 +410,12 @@ function boilerResetCss(filePath) {
   return;
 }
 
+/**
+ * It creates a new file called style.css in the directory that the user specified and writes a
+ * boilerplate comment to it
+ * @param filePath - The path to the directory where the files will be created.
+ * @returns Nothing.
+ */
 function boilerStyleCss(filePath) {
   let css = `/* Add Your Styling Below */`;
 
@@ -403,6 +424,11 @@ function boilerStyleCss(filePath) {
   return;
 }
 
+/**
+ * It creates a script.js file in the directory of the user's choice and writes a comment to it
+ * @param filePath - The path to the directory where the boilerplate files will be created.
+ * @returns Nothing.
+ */
 function boilerScript(filePath) {
   let js = `/* Add Your Javascript Below */`;
 
@@ -411,6 +437,7 @@ function boilerScript(filePath) {
   return;
 }
 
+/* Exporting the functions so that they can be used in other files. */
 module.exports = {
   boilerHtml,
   boilerResetCss,

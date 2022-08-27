@@ -17,6 +17,11 @@ const {
   frontEndLibOpts,
 } = require("./helpers/promptHelper");
 
+const { genFrontEndApp } = require("./helpers/generateFile&Folders");
+
+/**
+ * It creates a logo for the application.
+ */
 function init() {
   const logoText = logo({
     name: "Boiler Plate . JS",
@@ -36,6 +41,12 @@ function init() {
   loadMainPrompts();
 }
 
+/**
+ * The function `loadMainPrompts()` is called when the user runs the command `node index.js` in the
+ * terminal. It then asks the user two questions: 1) What is the name of your app? and 2) I am look for
+ * boiler plate code for ...?. The user's answers are then stored in the `res` object. The `res` object
+ * is then used to call the appropriate function depending on what the user chose
+ */
 function loadMainPrompts() {
   prompt([
     {
@@ -56,9 +67,13 @@ function loadMainPrompts() {
     },
   ]).then((res) => {
     let choice = res.choice;
-    // Call the appropriate function depending on what the user chose
+    /* A switch statement that is checking the value of the `choice` variable. If the value of `choice`
+    is `front_end_app`, then the function `frontEndApp()` is called. If the value of `choice` is
+    anything else, then the function `quit()` is called. */
     switch (choice) {
       case "front_end_app":
+        /* Calling the function `frontEndApp()` and passing in the value of the `appName` property of
+        the `res` object. */
         frontEndApp(res.appName);
         break;
       default:
@@ -67,49 +82,24 @@ function loadMainPrompts() {
   });
 }
 
+/**
+ * We ask the user if they want to add a front end library, if they do, we ask them which one, then we
+ * generate the app
+ * @param appName - The name of the app you want to create.
+ */
 async function frontEndApp(appName) {
   askForFrontEndLib().then((res) => {
-    console.log(res);
     let addFrontEndLib = res.addFrontEndLib;
+
+    /* Checking if the user wants to add a front end library. If they do, then it asks them which one. */
     if (addFrontEndLib) {
       frontEndLibOpts().then((res) => {
-        genFrontEndApp(appName, res)
+        genFrontEndApp(appName, res);
       });
     } else {
-      // frontEndAppNoLib (appName)
+      genFrontEndApp(appName);
     }
   });
-}
-
-async function genFrontEndApp(appName, frontEndLibArr) {
-  let dirs = [
-    "./output",
-    "./output/assets",
-    "./output/assets/CSS",
-    "./output/assets/JS",
-    "./output/assets/Images",
-    "./output/assets/Images/small",
-    "./output/assets/Images/medium",
-    "./output/assets/Images/large",
-  ];
-
-  for (let i = 0; i < dirs.length; i++) {
-    await createDirectories(dirs[i]);
-  }
-
-  await boilerHtml(
-    "./output",
-    appName,
-    frontEndLibArr ? frontEndLibArr : "",
-  );
-  await boilerResetCss("./output/assets/CSS/");
-  await boilerStyleCss("./output/assets/CSS/");
-  await boilerScript("./output/assets/JS/");
-}
-
-function quit() {
-  console.log("Goodbye!");
-  process.exit();
 }
 
 init();
