@@ -1,43 +1,4 @@
-const fs = require("fs");
-const path = require("path");
-
-function boilerHtml(filePath, appName, frontEndLibArr) {
-  let allCsslinks = "";
-  let allJslinks = "";
-
-  if (frontEndLibArr.length > 0) {
-    for (let i = 0; i < frontEndLibArr.length; i++) {
-      if(frontEndLibArr[i].value.css)  allCsslinks += `${frontEndLibArr[i].value.css} \n`;
-      if(frontEndLibArr[i].value.js)   allJslinks  += `${frontEndLibArr[i].value.js}  \n`;
-    }
-  }
-  console.log(allCsslinks, allJslinks);
-  let html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    ${allCsslinks}
-    <link rel="stylesheet" href="./assets/CSS/reset.css">
-    <link rel="stylesheet" href="./assets/CSS/style.css">
-    <title>${appName}</title>
-</head>
-<body>
-    <!-- Write Your Html -->
-</body>
-${allJslinks}
-<script src="./assets/JS/script.js"></script>
-</html>
-    `;
-
-  fs.writeFileSync(path.join(filePath, "index.html"), html);
-
-  return;
-}
-
-function boilerResetCss(filePath) {
-  let css = `/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
   /* Document
      ========================================================================== */
@@ -388,32 +349,4 @@ function boilerResetCss(filePath) {
   [hidden] {
     display: none;
   }
-  `;
-
-  fs.writeFileSync(path.join(filePath, "reset.css"), css);
-
-  return;
-}
-
-function boilerStyleCss(filePath) {
-  let css = `/* Add Your Styling Below */`;
-
-  fs.writeFileSync(path.join(filePath, "style.css"), css);
-
-  return;
-}
-
-function boilerScript(filePath) {
-  let js = `/* Add Your Javascript Below */`;
-
-  fs.writeFileSync(path.join(filePath, "script.js"), js);
-
-  return;
-}
-
-module.exports = {
-  boilerHtml,
-  boilerResetCss,
-  boilerStyleCss,
-  boilerScript,
-};
+  

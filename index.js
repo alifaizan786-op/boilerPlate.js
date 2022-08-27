@@ -3,14 +3,19 @@ const logo = require("asciiart-logo");
 const fs = require("fs");
 const path = require("path");
 
-const { createDirectories } = require("./helpers/fsHelpers")
+const { createDirectories } = require("./helpers/fsHelpers");
 
-const { 
+const {
   boilerHtml,
   boilerResetCss,
   boilerStyleCss,
-  boilerScript 
-} = require("./helpers/generateBoiler")
+  boilerScript,
+} = require("./helpers/generateBoiler");
+
+const {
+  askForFrontEndLib,
+  frontEndLibOpts,
+} = require("./helpers/promptHelper");
 
 function init() {
   const logoText = logo({
@@ -34,9 +39,9 @@ function init() {
 function loadMainPrompts() {
   prompt([
     {
-      type: 'input',
-      name: 'appName',
-      message: 'What is the name of your app?',
+      type: "input",
+      name: "appName",
+      message: "What is the name of your app?",
     },
     {
       type: "list",
@@ -63,6 +68,20 @@ function loadMainPrompts() {
 }
 
 async function frontEndApp(appName) {
+  askForFrontEndLib().then((res) => {
+    console.log(res);
+    let addFrontEndLib = res.addFrontEndLib;
+    if (addFrontEndLib) {
+      frontEndLibOpts().then((res) => {
+        genFrontEndApp(appName, res)
+      });
+    } else {
+      // frontEndAppNoLib (appName)
+    }
+  });
+}
+
+async function genFrontEndApp(appName, frontEndLibArr) {
   let dirs = [
     "./output",
     "./output/assets",
@@ -72,20 +91,21 @@ async function frontEndApp(appName) {
     "./output/assets/Images/small",
     "./output/assets/Images/medium",
     "./output/assets/Images/large",
-  ]
+  ];
 
   for (let i = 0; i < dirs.length; i++) {
-    await createDirectories(dirs[i])
+    await createDirectories(dirs[i]);
   }
 
-  await boilerHtml("./output", appName)
-  await boilerResetCss("./output/assets/CSS/")
-  await boilerStyleCss("./output/assets/CSS/")
-  await boilerScript("./output/assets/JS/")
-
-
+  await boilerHtml(
+    "./output",
+    appName,
+    frontEndLibArr ? frontEndLibArr : "",
+  );
+  await boilerResetCss("./output/assets/CSS/");
+  await boilerStyleCss("./output/assets/CSS/");
+  await boilerScript("./output/assets/JS/");
 }
-
 
 function quit() {
   console.log("Goodbye!");
