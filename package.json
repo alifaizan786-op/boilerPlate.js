@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/alifaizan786-op/boilerPlate.js.git"
   },
+  "bin": {
+    "runboiler": "./index.js"
+  },
   "keywords": [],
   "author": "alifaizan786-op",
   "license": "MIT",
