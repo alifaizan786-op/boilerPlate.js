@@ -59,6 +59,22 @@ module.exports = {
       return tempArr;
     });
   },
+  expressBackEndOpts() {
+    return prompt([
+      {
+        type: "input",
+        name: "portNumber",
+        message : "What port number would you like to serve your app on ?",
+        validate: (answer) => {
+          const pass = answer.match(/^[1-9]\d*$/);
+          if (pass) {
+            return true;
+          }
+          return 'Please enter a positive number greater than zero.';
+        }
+      }
+    ])
+  }
 };
 
 let frontEndLibArr = [

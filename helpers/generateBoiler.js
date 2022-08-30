@@ -437,10 +437,182 @@ function boilerScript(filePath) {
   return;
 }
 
+function boilerHtmlRoute(filePath){
+
+  let htmlRoute = `const path = require('path');
+  const router = require('express').Router();
+  
+  router.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  });
+  
+  module.exports = router;`
+
+  fs.writeFileSync(path.join(filePath, "htmlRoute.js"), htmlRoute);
+
+  return;
+
+}
+
+function boilerApiRoute(filePath){
+
+  let apiRoute = `const router = require('express').Router();
+
+  router.get('/', (req, res) => {
+   res.send("Hello World !")
+  });
+  
+  module.exports = router;`
+
+  fs.writeFileSync(path.join(filePath, "apiRoute.js"), apiRoute);
+
+  return;
+
+}
+
+function boilerIndexRoute(filePath, incFrontEndRoute){
+
+  let routeIndex = `const router = require('express').Router();
+  const apiRoutes = require('./apiRoutes');
+  const htmlRoutes = require('./htmlRoutes');
+  
+  router.use('/api', apiRoutes);
+  router.use('/', htmlRoutes);
+  
+  module.exports = router;`
+
+  fs.writeFileSync(path.join(filePath, "index.js"), routeIndex);
+
+  return;
+  
+}
+
+function boilerServerPath(filePath, portNum){
+  let server = `
+  const express = require('express');
+  
+  // Initialize the app and create a port
+  const app = express();
+  const PORT = process.env.PORT || ${parseInt(portNum)};
+  
+  // Set up body parsing, static, and route middleware
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.static('public'));
+  app.use(require('./routes'););
+  
+  // Start the server on the port
+  app.listen(PORT, () => console.log("Listening on PORT: ${parseInt(portNum)}"));`
+
+  fs.writeFileSync(path.join(filePath, "server.js"), server);
+
+  return;
+  
+}
+
+function boilerPackageJson(filePath, appName){
+  let package = `{
+      "name": "${appName.split(" ").join("-")}",
+      "version": "1.0.0",
+      "description": "",
+      "main": "server.js",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start":"node server.js",
+        "watch":"nodemon server.js"
+      },
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+        "express": "^4.16.4",
+        "nodemon": "^2.0.19"
+      }
+    }`
+
+  fs.writeFileSync(path.join(filePath, "package.json"), package);
+
+  return;
+  
+}
+
 /* Exporting the functions so that they can be used in other files. */
 module.exports = {
   boilerHtml,
   boilerResetCss,
   boilerStyleCss,
   boilerScript,
+  boilerHtmlRoute,
+  boilerApiRoute,
+  boilerIndexRoute,
+  boilerServerPath,
+  boilerPackageJson
 };
+
+
+// ./output/routes/apiRoutes.js
+
+// const router = require('express').Router();
+
+// router.get('/notes', (req, res) => {
+// res.send("Hello World !")
+// });
+
+// module.exports = router;
+// ----------------------------------------------
+// ./output/routes/htmlRoutes.js
+
+// const path = require('path');
+// const router = require('express').Router();
+
+// router.get('/notes', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../public/notes.html'));
+// });
+
+// module.exports = router;
+// --------------------------------------------------
+// ./output/routes/index.js
+
+// const router = require('express').Router();
+// const apiRoutes = require('./apiRoutes');
+// const htmlRoutes = require('./htmlRoutes');
+
+// router.use('/api', apiRoutes);
+// router.use('/', htmlRoutes);
+
+// module.exports = router;
+// ------------------------------------------------
+// ./output/server.js
+
+
+// const express = require('express');
+
+// // Initialize the app and create a port
+// const app = express();
+// const PORT = process.env.PORT || 3001;
+
+// // Set up body parsing, static, and route middleware
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.static('public'));
+// app.use(require('./routes'););
+
+// // Start the server on the port
+// app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+// ------------------------------------------------------------------
+// ./output/package.json
+
+// {
+//   "name": "note-taker",
+//   "version": "1.0.0",
+//   "description": "",
+//   "main": "server.js",
+//   "scripts": {
+//     "test": "echo \"Error: no test specified\" && exit 1"
+//   },
+//   "author": "",
+//   "license": "ISC",
+//   "dependencies": {
+//     "express": "^4.16.4",
+//     "uuid": "^3.4.0"
+//   }
+// }

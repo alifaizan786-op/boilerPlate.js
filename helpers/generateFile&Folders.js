@@ -8,6 +8,11 @@ const {
   boilerResetCss,
   boilerStyleCss,
   boilerScript,
+  boilerHtmlRoute,
+  boilerApiRoute,
+  boilerIndexRoute,
+  boilerServerPath,
+  boilerPackageJson
 } = require("./generateBoiler");
 
 const { createDirectories } = require("./fsHelpers");
@@ -51,4 +56,28 @@ module.exports = {
     }, 500);
     
   },
+  async genExpressBackend(appName, portNum, pathParam, incFrontEndRoute){
+
+    let dirs = [
+      path.join(pathParam, `/routes`)
+    ]
+
+    for (let i = 0; i < dirs.length; i++) {
+      await createDirectories(dirs[i]);
+    }
+
+    let htmlRoutePath = path.join(pathParam, `/routes`);
+    let apiRoutePath = path.join(pathParam, `/routes`);
+    let indexRoutePath = path.join(pathParam, `/routes`);
+    let serverPath = path.join(pathParam);
+    let packageJson = path.join(pathParam)
+
+    setTimeout(() => {
+      if (incFrontEndRoute) boilerHtmlRoute(htmlRoutePath)
+      boilerApiRoute(apiRoutePath)
+      boilerIndexRoute(indexRoutePath, incFrontEndRoute)
+      boilerServerPath(serverPath, portNum)
+      boilerPackageJson(packageJson, appName)
+    }, 500);
+  }
 };

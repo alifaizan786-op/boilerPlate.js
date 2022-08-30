@@ -4,14 +4,15 @@
   "description": "Boiler Plate Js is a package created to get rid of the tedious process of adding boiler plate code for a application ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "boiler": "node bin/cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alifaizan786-op/boilerPlate.js.git"
   },
   "bin": {
-    "runboiler": "./index.js"
+    "runboiler": "./bin/cli.js"
   },
   "keywords": [],
   "author": "alifaizan786-op",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/alifaizan786-op/boilerPlate.js#readme",
   "dependencies": {
     "asciiart-logo": "^0.2.7",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "nodemon": "^2.0.19"
   }
 }
