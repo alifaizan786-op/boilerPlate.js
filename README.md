@@ -1,8 +1,8 @@
 <h1 align="center">BolierPlate.js</h1>
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/material-ui/blob/HEAD/LICENSE)
-![Lines of code](https://img.shields.io/tokei/lines/github/alifaizan786-op/Code_Quiz?style=plastic)
-![Open Issues](https://img.shields.io/github/issues/alifaizan786-op/MaileX)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/alifaizan786-op/boilerPlate.js/blob/main/LICENSE)
+![Lines of Code](https://img.shields.io/badge/Lines_of_Code-2451-blue)
+![Open Issues](https://img.shields.io/github/issues/alifaizan786-op/boilerPlate.js)
 
 **boilerPlate.js** is a lightweight and modular JavaScript utility library designed to kickstart your Node.js or browser-based projects. It provides reusable boilerplate code to accelerate development and enforce clean, consistent coding practices.
 
